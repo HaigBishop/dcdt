@@ -1,12 +1,11 @@
 Package: dcdt
 Type: Package
-Title: What the Package Does (Title Case)
+Title: dC/dt Method for Analysis of Ultra Analytical Centrifugation (AUC) Data
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Author: Haig Bishop
+Maintainer: Haig Bishop <hbi34@uclive.ac.nz>
+Description: An R Package enabling the dC/dt method for analysis of Ultra Analytical Centrifugation (AUC) data.
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 URL: https://github.com/HaigBishop/dcdt
