@@ -18,3 +18,14 @@ You can install the development version of dcdt from
 # install.packages("devtools")
 devtools::install_github("HaigBishop/dcdt")
 ```
+
+## Example
+
+This is a basic example which shows you how to solve a common problem:
+
+``` r
+library(dcdt)
+
+# Read a X data file
+auc.data <- dcdt::readAUC("path/to/your/datafile.X")
+```
