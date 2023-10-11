@@ -1,0 +1,11 @@
+# Import run
+run1 <- import_run("C:/Users/haggi/Documents/School/dCdt/python_dcdt/182604_copy/list.RA2")
+
+# Grab the data frame from scan 1
+run1@scans[[1]]["data"]
+
+# Plot all the raw data
+plot_raw(run1)
+
+# Plot all the raw data between radii 6.25 and 7.1
+plot_raw(run1, radius_range=c(6.25, 7.1))
