@@ -38,7 +38,7 @@ import_run <- function(list_path, dir = NULL) {
 
   # Check directory exists
   if (!file.exists(dir)) {
-    stop("Directory does not exist.")
+    stop("Directory does not exist:")
   }
 
   # The rest of the lines are the scan file names
@@ -48,6 +48,9 @@ import_run <- function(list_path, dir = NULL) {
   if (length(scan_file_names) < 3 || any(scan_file_names == "")) {
     stop("There should be at least 3 non-empty scan file names.")
   }
+
+  # Importing the files may take several seconds...
+  cat("Loading scan files...\n")
 
   # Import all scans specified in the list file
   # Store them as S3 "Scan" objects in a list
@@ -62,6 +65,9 @@ import_run <- function(list_path, dir = NULL) {
 
   # Create a Run object and return
   run <- new("Run", name = scan$name, num_scans = length(scans), scans = scans)
+
+  # Notify the user
+  cat("Loaded", run@num_scans, "scans.\n")
   return(run)
 }
 

@@ -29,22 +29,32 @@ plot_raw <- function(run, start = 1, end = NULL, step = 1, radius_range = NULL) 
   if (is.null(end)) {
     end <- run@num_scans
 
-  # Throw error if end is too big or too small
-  } else if (end > run$num_scans) {
+  # Throw error if start or end is too big or too small
+  } else if (end > run@num_scans) {
     stop("end mustn't be greater than the number of scans.")
   } else if (end < 1) {
     stop("end must be at least 1.")
+  } else if (start > end) {
+    stop("end must be greater than start.")
   }
+
+  # Get the vector of scans to plot
+  scans_to_plot = seq(start, end, by = step)
+  # Generate an accompanying vector of colours to use on the plot
+  colours = rainbow(length(scans_to_plot))
 
   # Set the radius range if not provided
   if (is.null(radius_range)) {
     # Collect all radii from all scans
     radii <- vector("numeric", length = 0)
-    for (i in seq(start, end, by = step)) {
+    for (i in scans_to_plot) {
       radii <- c(run@scans[[i]]["data"]$data[["radius"]], radii)
     }
     # Use max and min radii from all radii from all scans
     radius_range <- c(min(radii), max(radii))}
+
+  # Ensure that the radius range is ordered
+  radius_range <- c(min(radius_range), max(radius_range))
 
 
   # Collect all radii, x values, and y values from all scans
@@ -52,7 +62,7 @@ plot_raw <- function(run, start = 1, end = NULL, step = 1, radius_range = NULL) 
   radii <- vector("numeric", length = 0)
   xs <- vector("numeric", length = 0)
   ys <- vector("numeric", length = 0)
-  for (i in seq(start, end, by = step)) {
+  for (i in scans_to_plot) {
     trimmed_df <- subset(run@scans[[i]]["data"]$data, radius >= radius_range[1] & radius <= radius_range[2])
     radii <- c(trimmed_df[["radius"]], radii)
     xs <- c(trimmed_df[["x"]], xs)
@@ -63,9 +73,11 @@ plot_raw <- function(run, start = 1, end = NULL, step = 1, radius_range = NULL) 
   plot(1, type = "n", xlim = radius_range, ylim = c(min(xs), max(xs)), xlab = "Radius", ylab = "Absorbance", main = run@name)
 
   # Loop through each scan from start to end using the step
-  for (i in seq(start, end, by = step)) {
+  scan_n <- 1
+  for (i in scans_to_plot) {
     # Grab the data frame and add this scan to the plot
     df <- run@scans[[i]]["data"]$data
-    lines(df[["radius"]], df[["x"]], type = "l", col = "blue")
+    lines(df[["radius"]], df[["x"]], type = "l", col = colours[scan_n])
+    scan_n <- scan_n + 1
   }
 }
